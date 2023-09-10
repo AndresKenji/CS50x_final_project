@@ -1,8 +1,8 @@
 from sqlalchemy import Column,Integer,String, ForeignKey, Date
-import database
+from .database import Base, engine
 
 
-class Users(database.Base):
+class Users(Base):
     __tablename__ = "users"
     id = Column(Integer,primary_key=True, index=True)
     name = Column(String)
@@ -12,22 +12,22 @@ class Users(database.Base):
     rol_id = Column(Integer, ForeignKey('roles.id'), nullable=True)
 
 
-class Roles(database.Base):
+class Roles(Base):
     __tablename__ = "roles"
     id = Column(Integer,primary_key=True, index=True)
     name = Column(String, nullable=False)
 
-class Meal(database.Base):
+class Meal(Base):
     __tablename__ = "meal"
     id = Column(Integer,primary_key=True, index=True)
     name = Column(String, nullable=False)
 
-class States(database.Base):
+class States(Base):
     __tablename__ = "states"
     id = Column(Integer,primary_key=True, index=True)
     name = Column(String, nullable=False)
 
-class Food(database.Base):
+class Food(Base):
     __tablename__ = "food"
     id = Column(Integer,primary_key=True, index=True)
     name = Column(String, nullable=False)
@@ -37,7 +37,7 @@ class Food(database.Base):
     price = Column(Integer, nullable=False)
     image_url = Column(String, nullable=True)
 
-class Drinks(database.Base):
+class Drinks(Base):
     __tablename__ = 'drinks'
     id = Column(Integer,primary_key=True, index=True)
     name = Column(String, nullable=False)
@@ -47,7 +47,7 @@ class Drinks(database.Base):
     price = Column(Integer, nullable=False)
     image_url = Column(String, nullable=True)
 
-class Menu(database.Base):
+class Menu(Base):
     __tablename__ = 'menu'
     id = Column(Integer,primary_key=True, index=True)
     food_id = Column(Integer,ForeignKey('food.id'), nullable=True)
@@ -56,7 +56,7 @@ class Menu(database.Base):
     drink_quantity = Column(Integer, nullable=True)
 
 
-class Order(database.Base):
+class Order(Base):
     __tablename__ = 'orders'
     id = Column(Integer,primary_key=True, index=True)
     food_id = Column(Integer,ForeignKey('food.id'), nullable=True)
@@ -67,7 +67,7 @@ class Order(database.Base):
     date = Column(Date)
 
 
-class Invoice(database.Base):
+class Invoice(Base):
     __tablename__ ='invoice'
     id = Column(Integer,primary_key=True, index=True)
     order_id = Column(Integer, ForeignKey('orders.id'))
@@ -77,4 +77,4 @@ class Invoice(database.Base):
     date = Column(Date)
 
 
-database.Base.metadata.create_all(bind=database.engine)
+Base.metadata.create_all(bind=engine)
