@@ -17,6 +17,11 @@ class Roles(Base):
     id = Column(Integer,primary_key=True, index=True)
     name = Column(String, nullable=False)
 
+class Orders(Base):
+    __tablename__ = "orders"
+    id = Column(Integer,primary_key=True, index=True)
+    date = Column(Date, nullable=False)
+    state_id = Column(Integer,ForeignKey('states.id'), nullable=False)
 class Meal(Base):
     __tablename__ = "meal"
     id = Column(Integer,primary_key=True, index=True)
@@ -56,15 +61,16 @@ class Menu(Base):
     drink_quantity = Column(Integer, nullable=True)
 
 
-class Order(Base):
-    __tablename__ = 'orders'
-    id = Column(Integer,primary_key=True, index=True)
+class OrderDetail(Base):
+    __tablename__ = 'orderdetail'
+    id = Column(Integer,primary_key=True)
+    order_id = Column(Integer, ForeignKey('orders.id'), nullable=False, index=True)
     food_id = Column(Integer,ForeignKey('food.id'), nullable=True)
     drink_id = Column(Integer,ForeignKey('drinks.id'), nullable=True)
     user_id = Column(Integer,ForeignKey('users.id'), nullable=False)
-    state_id = Column(Integer,ForeignKey('states.id'))
     detail = Column(String)
-    date = Column(Date)
+    food_quantity = Column(Integer, nullable=True)
+    drink_quantity = Column(Integer, nullable=True)
 
 
 class Invoice(Base):

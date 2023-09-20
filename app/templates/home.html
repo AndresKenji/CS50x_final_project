@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+
+{% block content %}
+<div class="row content">
+    <div class="col-sm-2 sidenav">
+      <div class="list-group">
+        <a class="list-group-item" href="/contact">Contact us</a>
+        <a class="list-group-item" href="/login">Login</a>
+        <a class="list-group-item" href="/about">About</a>
+      </div>
+
+    </div>
+    <div class="col-sm-10 text-left"> 
+      <h1>Welcome to my restaurant</h1>
+      <p>
+        This is my final project for CS50X, and it's a comprehensive restaurant application. <br>
+        To begin, you need to log in as an administrator to add new roles or make changes. There are four types of roles available<br>
+      </p>
+        <ul class="align-baseline">
+          <li>Administrator</li>
+          <li>Chef</li>
+          <li>Waiter</li>
+          <li>Customer</li>
+        </ul>
+        <p>All users are initially registered as customers. An administrator must change their roles, and your assigned role determines what actions you can perform.</p>
+        <hr>
+        <h3>Administrator</h3>
+        <p>An administrator can perform all tasks, including creating or deleting users, and can also act as a customer or any other role.</p>
+        <h3>Chef</h3>
+        <p>The chef will have full control over order management. They can change the order status, allowing the customer to track their order effectively. <br>
+          The chef can manage the entire menu by adding or deleting items. They will also need to start the menu fresh at the beginning of each day to create the daily menu</p>
+        <h3>Waiter</h3>
+        <p>Waiters can view the menu, create orders, and generate invoices.</p>
+        <h3>Customers</h3>
+        <p>Finally, customers are limited to viewing the menu and accessing information about the ingredients used in each recipe.</p>
+      <hr>
+    </div>
+  </div>
+{% endblock %}

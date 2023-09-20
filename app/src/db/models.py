@@ -9,6 +9,8 @@ class UsersBase(BaseModel):
     rol_id: Optional[int]
 
 
+
+
 class RolesBase(BaseModel):
     name: str
 
@@ -41,13 +43,17 @@ class MenuBase(BaseModel):
     food_quantity: Optional[int]
     drink_quantity: Optional[int]
 
-class OrderBase(BaseModel):
-    food_id: Optional[int]
-    drink_id: Optional[int]
+class OrdersBase(BaseModel):
+    date: str
+
+class OrderDetailBase(BaseModel):
+    order_id: int
+    food_id: Optional[int] = None
+    drink_id: Optional[int] = None
     user_id: int
-    state_id: Optional[int]
-    detail: Optional[str]
-    date: Optional[str]
+    detail: Optional[str] = None
+    food_quantity: Optional[int] = None
+    drink_quantity: Optional[int] = None
 
 class InvoiceBase(BaseModel):
     order_id: int
