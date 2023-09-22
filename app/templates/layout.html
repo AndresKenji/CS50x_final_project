@@ -39,21 +39,31 @@
             <a class="nav-link" href="/users"> <i class="bi-person-fill-gear"></i>Users</a>
           </li>
         {% endif %}
-                    
-        </ul>
+
+      </ul>
+      {% if USERNAME  %}
+      <a class="navbar-brand">Welcome {{ USERNAME }}</a>
+      
+      {% endif %} 
         {% if session == True %}
         <form class="d-flex" role="logout" method="post" action="/logout">
-          <button class="btn btn-danger" href="/logout" type="submit">Logout</button>
+          <button class="btn btn-danger me-2" href="/logout" type="submit">Logout</button>
         </form>
           {% else %}
-          <a class="btn btn-success" href="/login">Login</a>
+          <a class="btn btn-success me-2" href="/login">Login</a>
           {% endif %}
       </div>
     </div>
   </nav>
+  {% if msg %}
+
+  {% endif%}
     
   <div class="container-fluid">    
     {% block content %}
+    <div class="alert alert-warning" role="alert">
+      {{msg}}
+    </div>
     {% endblock %}
   </div>
   

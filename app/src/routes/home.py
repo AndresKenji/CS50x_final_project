@@ -11,11 +11,13 @@ from functools import wraps
 from .. db import users_actions
 from .. db.database import get_db
 from .. db.models import UsersBase
-from .. db.db_models import Users
+from .. db.db_models import Users, Roles
+from . helpers import login_required, get_current_user
 
 templates = Jinja2Templates(directory="templates")
 router = APIRouter()
 
+# Loginform class for the login page
 class LoginForm:
     def __init__(self, request: Request):
         self.request: Request = request
@@ -26,38 +28,8 @@ class LoginForm:
         form = await self.request.form()
         self.username = form.get('username')
         self.password = form.get('password')
-
-def login_required(f):
-    """
-    Decorate routes to require login
-    """
-    @wraps(f)
-    def decorated_function(*args, ** kwargs):
-        if get_current_user() is None:
-            response = RedirectResponse(url="/login", status_code=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
-            return response
-        return f(*args, ** kwargs)
-    return decorated_function
-
-def get_current_user(request: Request, db:Session):
-    try:
-        user_id = request.cookies.get("user")
-        print("Find user cookie = ",user_id)
-        
-        if user_id is None:
-            print("User cookie not found")
-            return None, {"request":request, "session":False, "rol":4}
-        
-        user = db.query(Users).filter(Users.id == user_id).first()
-        if user is None:
-            print("User not found on db")
-            return None, {"request":request, "session":False, "rol":4}
-        print("User found on db")
-        return user, {"request":request, "session":True, "rol":user.rol_id}
-    except:
-        return None, {"request":request, "session":False, "rol":4}
     
-
+# Home page resources
 @router.get("/home", response_class=HTMLResponse)
 def home(request: Request, db: Session = Depends(get_db)):
     print("loading home page")
@@ -99,6 +71,7 @@ async def login_post(request: Request,
                                             password=form_data.password)
         if user:
             response.set_cookie(key="user",value=user.id, httponly=True)
+            USERNAME = user.name
             return response
         else:
             return templates.TemplateResponse('login.html', {"request":request, "session":False, "msg":"Incorrect Username or Password", "rol":4})
@@ -111,5 +84,25 @@ async def login_post(request: Request,
 def logout(request: Request):
     response = templates.TemplateResponse("home.html",{"request": request,"session":False, "rol":4})
     response.delete_cookie(key="user")
+    USERNAME = None
     
     return response
+
+@router.get('/users',response_class=HTMLResponse)
+def get_users_page(request: Request,response:Response, db: Session = Depends(get_db)):
+    print("loading users page")
+    user, body = get_current_user(request=request, db=db)
+    if user is None:
+        return RedirectResponse(url="/home",status_code=status.HTTP_307_TEMPORARY_REDIRECT)
+    if user.rol_id != 1:
+        print("Unauthorized user getting back to home page")
+        return RedirectResponse(url="/home",status_code=status.HTTP_307_TEMPORARY_REDIRECT)
+    
+    users = db.query(Users.name, Users.last_name, Users.email, Roles.name.label('rol'))\
+                .join(Roles, Roles.id == Users.rol_id)
+    
+    body["users"] = users
+    
+    return templates.TemplateResponse("users.html", body)
+
+

@@ -8,7 +8,6 @@ import sys
 sys.path.append('.')
 from src.routes import users, food_drinks, menu, orders, invoice, home
 
-
 middleware = [
     Middleware(
         CORSMiddleware,
