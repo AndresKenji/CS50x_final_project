@@ -1,0 +1,49 @@
+<mxfile host="65bd71144e">
+    <diagram id="8BtS_sk9en00jfVSXG4w" name="Page-1">
+        <mxGraphModel dx="1131" dy="477" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="7" value="" style="whiteSpace=wrap;html=1;aspect=fixed;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;strokeColor=#000000;strokeWidth=6;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;fontSize=20;gradientColor=none;gradientDirection=west;fillColor=#FFFFFF;fillStyle=zigzag;" vertex="1" parent="1">
+                    <mxGeometry x="345" y="170" width="130" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="" style="ellipse;whiteSpace=wrap;html=1;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;fontSize=20;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#000000;gradientColor=#ffa3f3;gradientDirection=west;strokeWidth=6;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" vertex="1" parent="1">
+                    <mxGeometry x="360" y="190" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="" style="endArrow=none;html=1;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;fontSize=16;exitX=0.24;exitY=0.94;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.35;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;rounded=0;strokeColor=#000000;strokeWidth=6;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" edge="1" parent="1" source="2" target="2">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="270" as="sourcePoint"/>
+                        <mxPoint x="450" y="220" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="4" value="" style="endArrow=none;html=1;rounded=0;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;strokeColor=#000000;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;fontSize=16;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.4;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=6;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" edge="1" parent="1" source="2" target="2">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="270" as="sourcePoint"/>
+                        <mxPoint x="400" y="200" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="5" value="" style="curved=1;endArrow=oval;html=1;rounded=0;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;strokeColor=#000000;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;fontSize=16;strokeWidth=6;endFill=1;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="450" y="270" as="sourcePoint"/>
+                        <mxPoint x="400" y="190" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="450" y="270"/>
+                            <mxPoint x="410" y="250"/>
+                            <mxPoint x="410" y="230"/>
+                            <mxPoint x="420" y="230"/>
+                            <mxPoint x="430" y="220"/>
+                            <mxPoint x="430" y="200"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="6" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;strokeColor=#000000;strokeWidth=6;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;fontSize=16;endArrow=oval;endFill=1;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" edge="1" parent="1">
+                    <mxGeometry width="80" relative="1" as="geometry">
+                        <mxPoint x="390" y="240" as="sourcePoint"/>
+                        <mxPoint x="410" y="240" as="targetPoint"/>
+                        <Array as="points"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

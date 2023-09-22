@@ -7,8 +7,8 @@
 
 {% block content %}
 
-<div class="container align-content-center mt-5">
-    <table class="table table-dark table-hover">
+<div class="container align-content-center mt-5" >
+    <table class="table table-dark table-hover ">
         <thead>
             <tr>
                 <th>Name</th>
@@ -34,12 +34,47 @@
             {% endfor %}
         </tbody>
     </table>
+    
+    
+</div>
+<div class="container bg-black bg-opacity-75 m-4 p-3" style="color: aliceblue; border-radius: 10px;">
+    <h2 class="text-center">Add user</h2>
+    <form action="/users/create_user" method="post">
+        <div class="row align-items-center">
+            <div class="col-md-5 ">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" name="name" id="name" placeholder="name">
+            </div>
+            <div class=" col-md-5">
+                <label for="last_name">Last Name</label>
+                <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last_name">
+            </div>
+            <div class=" col-md-2">
+                <label for="rol">Rol</label>
+                <select name="rol" id="rol" class="form-select">
+                    <option selected>Select rol</option>
+                    <option value="1">Administrator</option>
+                    <option value="2">Chef</option>
+                    <option value="3">Waiter</option>
+                    <option value="4">Customer</option>
+                </select>
+            </div>
+        </div>
+        <div class="row align-items-center">
 
-    <div class="row">
-        
-
-    </div>
-
+            <div class="col-5">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+            </div>
+            <div class="col-5">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+            </div>
+            <div class="col-auto pt-4">
+                <button type="submit" class="btn btn-primary ">Add</button>
+            </div>
+        </div>
+    </form>
 </div>
 
 {% endblock %}

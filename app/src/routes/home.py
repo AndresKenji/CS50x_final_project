@@ -87,22 +87,3 @@ def logout(request: Request):
     USERNAME = None
     
     return response
-
-@router.get('/users',response_class=HTMLResponse)
-def get_users_page(request: Request,response:Response, db: Session = Depends(get_db)):
-    print("loading users page")
-    user, body = get_current_user(request=request, db=db)
-    if user is None:
-        return RedirectResponse(url="/home",status_code=status.HTTP_307_TEMPORARY_REDIRECT)
-    if user.rol_id != 1:
-        print("Unauthorized user getting back to home page")
-        return RedirectResponse(url="/home",status_code=status.HTTP_307_TEMPORARY_REDIRECT)
-    
-    users = db.query(Users.name, Users.last_name, Users.email, Roles.name.label('rol'))\
-                .join(Roles, Roles.id == Users.rol_id)
-    
-    body["users"] = users
-    
-    return templates.TemplateResponse("users.html", body)
-
-

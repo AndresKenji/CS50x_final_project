@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" href="/static/icono.png" type="image/png" sizes="32x32">
   <title>{% block title %}{% endblock %}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,7 +17,7 @@
 </head>
 <body>
     
-  <nav class="navbar navbar-expand-lg navbar-dark bg-black">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-black ">
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -36,13 +37,13 @@
           </li>
         {% if rol == 1%}
           <li class="nav-item">
-            <a class="nav-link" href="/users"> <i class="bi-person-fill-gear"></i>Users</a>
+            <a class="nav-link" href="/users/users"> <i class="bi-person-fill-gear"></i>Users</a>
           </li>
         {% endif %}
 
       </ul>
       {% if USERNAME  %}
-      <a class="navbar-brand">Welcome {{ USERNAME }}</a>
+      <a class="navbar-brand">Welcome {{ USERNAME | title }}</a>
       
       {% endif %} 
         {% if session == True %}
