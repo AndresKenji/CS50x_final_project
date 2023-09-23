@@ -1,18 +1,13 @@
-import json
 from fastapi import APIRouter, Depends, Request, Response, status
 from fastapi.responses import RedirectResponse, HTMLResponse
-from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
-from typing import List, Optional
-from passlib.context import CryptContext
-from functools import wraps
-
+from typing import Optional
+# Local imports
 from .. db import users_actions
 from .. db.database import get_db
-from .. db.models import UsersBase
-from .. db.db_models import Users, Roles
-from . helpers import login_required, get_current_user
+from . helpers import get_current_user
 
 templates = Jinja2Templates(directory="templates")
 router = APIRouter()
@@ -34,7 +29,6 @@ class LoginForm:
 def home(request: Request, db: Session = Depends(get_db)):
     print("loading home page")
     user, body = get_current_user(request=request, db=db)
-    print(body)
     return templates.TemplateResponse("home.html", body)
 
 @router.get("/contact", response_class=HTMLResponse)

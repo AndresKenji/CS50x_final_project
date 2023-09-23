@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit User
+{% endblock %}
+
+
+{% block content %}
+
+<div class="center-box container m-4 p-3" >
+    <h2 class="text-center">Edit user</h2>
+    <form action="/users/update_user/{{user.id}}" method="post">
+        <div class="row align-items-center">
+            <div class="col-md-8 ">
+                <label for="name">Name</label>
+                <input type="text" class="form-control text-center" name="name" id="name" value="{{user.name}}">
+            </div>
+            <div class=" col-md-8">
+                <label for="last_name">Last Name</label>
+                <input type="text" class="form-control text-center" name="last_name" id="last_name" value="{{user.last_name}}">
+            </div>
+            <div class=" col-md-2">
+                <label for="rol">Rol</label>
+                <select name="rol" id="rol" class="form-select">
+                    <option selected>Select rol</option>
+                    <option value="1">Administrator</option>
+                    <option value="2">Chef</option>
+                    <option value="3">Waiter</option>
+                    <option value="4">Customer</option>
+                </select>
+            </div>
+        </div>
+        <div class="row align-items-center">
+
+            <div class="col-8">
+                <label for="email">Email</label>
+                <input type="email" class="form-control text-center" name="email" id="email" value="{{user.email}}">
+            </div>
+            <div class="col-8">
+                <label for="password">Password</label>
+                <input type="password" class="form-control text-center" name="password" id="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="col-auto pt-4">
+            <button type="submit" class="btn btn-outline-danger ">Confirm</button>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

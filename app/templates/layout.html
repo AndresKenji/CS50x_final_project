@@ -27,7 +27,7 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/home"> <i class="bi-house-door-fill"></i>Home</a>
           </li>
-        
+        {% if session %}
           <li class="nav-item">
             <a class="nav-link" href="/menu"> <i class="bi-file-text-fill"></i>Menu</a>
           </li>
@@ -35,6 +35,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/orders"> <i class="bi-list-check"></i>Orders</a>
           </li>
+        {% endif %}
         {% if rol == 1%}
           <li class="nav-item">
             <a class="nav-link" href="/users/users"> <i class="bi-person-fill-gear"></i>Users</a>
@@ -57,14 +58,14 @@
     </div>
   </nav>
   {% if msg %}
-
+  <div class="alert alert-warning" role="alert">
+    {{msg}}
+  </div>
   {% endif%}
     
   <div class="container-fluid">    
     {% block content %}
-    <div class="alert alert-warning" role="alert">
-      {{msg}}
-    </div>
+ 
     {% endblock %}
   </div>
   

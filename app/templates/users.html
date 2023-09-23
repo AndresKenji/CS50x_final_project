@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Home
+    Users Management
 {% endblock %}
 
 
@@ -23,12 +23,32 @@
             <tr>
                 <td> {{user.name | title}} </td>
                 <td> {{user.last_name | title }} </td>
-                <td> {{user.email}} </td>
-                <td> {{user.rol}} </td>
+                <td> {{user.email}}</td>
+                <td> {{user.rol}}</td>
                 <td>
-                    <button class="btn btn-outline-info">Edit</button>
+                    <a class="btn btn-outline-info" href="/users/update_user/{{ user.id }}">Edit</a>
                     <span>...</span>
-                    <button class="btn btn-outline-danger">Delete</button>
+                    <!-- <a class="btn btn-outline-danger" href='/users/delete_user/{{user.id}}'>Delete</a> -->
+                  <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{user.id}}">
+                        Delete
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade bg-black bg-opacity-75" id="staticBackdrop{{user.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdrop{{user.id}}Label" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdrop{{user.id}}Label" style="color: black;">Delete User {{user.name}} ?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a class="btn btn-outline-danger" href='/users/delete_user/{{user.id}}'>Delete</a>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
             {% endfor %}
@@ -39,7 +59,7 @@
 </div>
 <div class="container bg-black bg-opacity-75 m-4 p-3" style="color: aliceblue; border-radius: 10px;">
     <h2 class="text-center">Add user</h2>
-    <form action="/users/create_user" method="post">
+    <form action="/users/users" method="post">
         <div class="row align-items-center">
             <div class="col-md-5 ">
                 <label for="name">Name</label>

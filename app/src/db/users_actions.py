@@ -59,16 +59,7 @@ def delete_user(db: Session, id:int) -> bool:
     
     return True
 
-def update_user(db: Session, edit : UsersBase) -> Users | None:
-
-    user = db.query(Users).filter(Users.email == edit.email).first()
-    if user is None:
-        return "User does not exists"
-    
-    user.name = edit.name
-    user.last_name = edit.last_name
-    user.email = edit.email
-    user.rol_id = edit.rol_id
+def update_user(db: Session, user : Users) -> Users | None:
 
     db.add(user)
     db.commit()

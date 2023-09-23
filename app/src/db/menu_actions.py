@@ -1,6 +1,5 @@
 from sqlalchemy.orm.session import Session
-from .database import sessionLocal
-from .db_models import Menu
+from .db_models import Menu, Food, Drinks
 from .models import MenuBase
 
 def add_menu(db: Session, menu: MenuBase) -> Menu | str:
@@ -43,7 +42,7 @@ def delete_menu(db: Session, menu_id: int) -> bool:
     except:
         return False
 
-def update_menu(db: Session, menu_id: int, menu: MenuBase) -> Menu | None:
+def update_menu(db: Session, menu_id: int, menu: MenuBase) -> Menu | None | str:
     _menu = db.query(Menu).filter(Menu.id == menu_id).first()
     if _menu == None:
         return False
@@ -71,3 +70,5 @@ def update_menu(db: Session, menu_id: int, menu: MenuBase) -> Menu | None:
 def get_menu(db : Session) -> list[Menu] | None:
     return db.query(Menu).all()
 
+def get_menu_details(db : Session):
+    return db.query(Menu)
