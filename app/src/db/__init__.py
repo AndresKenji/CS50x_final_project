@@ -1,7 +1,7 @@
 from sqlalchemy import sql
 from .users_actions import create_user
 from .roles_actions import create_rol
-from .db_models import Users, Roles, States, Meal
+from .db_models import Users, Roles, States, Meal, Types
 from .models import UsersBase
 from .database import sessionLocal
 import time
@@ -40,13 +40,17 @@ if len(db.query(States).all()) == 0:
     print("Creating food states")
 
     db.execute(sql.text("INSERT INTO states (name) VALUES ('ordered'), ('cooking'),('serve'),('finished'),('canceled');"))
-    time_wait(3)
+    time_wait(2)
 
 if len(db.query(Meal).all()) == 0:
     print("Creating meal types")
     db.execute(sql.text("INSERT INTO meal (name) VALUES ('breakfast'), ('lunch'),('dinner'),('brunch'),('casual');"))
-    time_wait(3)
-    
+    time_wait(2)
+
+if len(db.query(Types).all()) == 0:
+    print("Creating food types")
+    db.execute(sql.text("INSERT INTO types (name) VALUES ('food'), ('drink'),('dessert'),('special');"))
+    time_wait(2)    
 
 db.commit()
 db.close()

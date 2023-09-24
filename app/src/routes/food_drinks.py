@@ -1,54 +1,65 @@
-import json
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request, Response, status
+from fastapi.responses import RedirectResponse, HTMLResponse
+from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
-from typing import List
-
+# Local imports
 from ..db import food_drink_actios
 from ..db.database import get_db
-from ..db.models import FoodBase, DrinksBase
-from ..db.db_models import Food, Drinks
+from ..db.models import FoodBase
+from ..db.db_models import Food
+from . helpers import get_current_user
 
+templates = Jinja2Templates(directory="templates")
 router = APIRouter(
-    prefix="/food_drinks",
+    prefix="/food",
     tags=['food']
 )
 
-@router.post('/create_food')
-def create_food(food: FoodBase,db: Session = Depends(get_db)):
-    return food_drink_actios.create_food(db=db, food=food)
+@router.post('/create_food', response_class=HTMLResponse)
+async def create_food(request: Request,db: Session = Depends(get_db)):
+    print("adding food")
+    user, body = get_current_user(request=request, db=db)
+    if user is None:
+            return RedirectResponse(url="/home",status_code=status.HTTP_307_TEMPORARY_REDIRECT)
+    formdata = await request.form()
+    food = FoodBase(
+         name=formdata['name'],
+         origin=formdata['origin'],
+         type_id=formdata['type'],
+         meal_id=formdata['meal'],
+         ingredients=formdata['ingredients'],
+         price=formdata['price'],
+         image_url=formdata['image_url']
+    )
+    new_food = food_drink_actios.create_food(db=db, food=food)
 
-@router.post('/create_drink')
-def create_drink(drink: DrinksBase,db: Session = Depends(get_db)):
-    return food_drink_actios.create_drink(db=db, drink=drink)
+    if isinstance(new_food, Food):
+         return RedirectResponse(url="/menu",status_code=status.HTTP_302_FOUND)
+    else:
+         return RedirectResponse(url="/home",status_code=status.HTTP_306_RESERVED) 
+
+
 
 @router.delete('/delete_food/{food_id}')
 def delete_food(food_id:int,db: Session = Depends(get_db)):
     return food_drink_actios.delete_food(db=db, food_id=food_id)
 
-@router.delete('/delete_drink/{drink_id}')
-def delete_drink(drink_id:int,db: Session = Depends(get_db)):
-    return food_drink_actios.delete_drink(db=db, drink_id=drink_id)
+
 
 @router.patch('/update_food/{food_id}')
 def update_food(food_id: int, food:FoodBase, db : Session = Depends(get_db)):
     return food_drink_actios.update_food(db=db, food_id=food_id, food=food)
 
-@router.patch('/update_drink/{drink_id}')
-def update_food(drink_id: int, drink:FoodBase, db : Session = Depends(get_db)):
-    return food_drink_actios.update_drink(db=db, drink_id= drink_id, drink= drink)
+
 
 @router.get('/get_food')
 def get_food(db : Session = Depends(get_db)):
     return food_drink_actios.get_food(db=db)
 
-@router.get('/get_drinks')
-def get_drinks(db : Session = Depends(get_db)):
-    return food_drink_actios.get_drinks(db=db)
+
 
 @router.get('/get_one_food/{name}')
 def get_one_food(name:str,db : Session = Depends(get_db)):
     return food_drink_actios.get_one_food(name=name, db=db)
 
-@router.get('/get_drink/{name}')
-def get_drink(name:str,db : Session = Depends(get_db)):
-    return food_drink_actios.get_drink(name=name, db=db)

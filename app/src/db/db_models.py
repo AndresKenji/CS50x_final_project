@@ -17,6 +17,11 @@ class Roles(Base):
     id = Column(Integer,primary_key=True, index=True)
     name = Column(String, nullable=False)
 
+class Types(Base):
+    __tablename__ = "types"
+    id = Column(Integer,primary_key=True, index=True)
+    name = Column(String, nullable=False)
+
 class Orders(Base):
     __tablename__ = "orders"
     id = Column(Integer,primary_key=True, index=True)
@@ -41,24 +46,15 @@ class Food(Base):
     meal_id = Column(Integer,ForeignKey('meal.id'), nullable=False)
     price = Column(Integer, nullable=False)
     image_url = Column(String, nullable=True)
+    type_id = Column(Integer, ForeignKey("types.id"), nullable=False)
 
-class Drinks(Base):
-    __tablename__ = 'drinks'
-    id = Column(Integer,primary_key=True, index=True)
-    name = Column(String, nullable=False)
-    origin = Column(String)
-    ingredients = Column(String, nullable=False)
-    meal_id = Column(Integer,ForeignKey('meal.id'), nullable=False)
-    price = Column(Integer, nullable=False)
-    image_url = Column(String, nullable=True)
 
 class Menu(Base):
     __tablename__ = 'menu'
     id = Column(Integer,primary_key=True, index=True)
     food_id = Column(Integer,ForeignKey('food.id'), nullable=True)
-    drink_id = Column(Integer,ForeignKey('drinks.id'), nullable=True)
     food_quantity = Column(Integer, nullable=True)
-    drink_quantity = Column(Integer, nullable=True)
+    type_id = Column(Integer,ForeignKey("types.id"), nullable=False)
 
 
 class OrderDetail(Base):
@@ -66,11 +62,9 @@ class OrderDetail(Base):
     id = Column(Integer,primary_key=True)
     order_id = Column(Integer, ForeignKey('orders.id'), nullable=False, index=True)
     food_id = Column(Integer,ForeignKey('food.id'), nullable=True)
-    drink_id = Column(Integer,ForeignKey('drinks.id'), nullable=True)
     user_id = Column(Integer,ForeignKey('users.id'), nullable=False)
     detail = Column(String)
     food_quantity = Column(Integer, nullable=True)
-    drink_quantity = Column(Integer, nullable=True)
 
 
 class Invoice(Base):

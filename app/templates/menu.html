@@ -6,46 +6,75 @@
 
 {% block content %}
 
-<div class="bg-3 text-center bg-body-tertiary mt-5 p-3 font-monospace">    
-    <h3>Menu</h3><br>
-    {% for fd in menu %}
 
+<div class="container bg-dark m-2 p-2 bg-opacity-75">
+  {% if rol in [1,2] %}
+  
+  <div class="row">
+    <div class="col-sm-9">
+      {% include 'add-food.html' %}
+  
+      <div id="edit-food">
+  
+      </div>
 
-    {% endfor %}
-    <div class="row">
-      <div class="col-auto">
-        <p>Some text..</p>
-        <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
+      <div id="add-menu">
+  
       </div>
-      <div class="col-auto"> 
-        <p>Some text..</p>
-        <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
+
+      <div id="edit-menu">
+  
       </div>
-      <div class="col-auto"> 
-        <p>Some text..</p>
-        <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
-      </div>
-      <div class="col-auto">
-        <p>Some text..</p>
-        <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
-      </div>
-      <div class="col-auto">
-        <p>Some text..</p>
-        <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
-      </div>
-      <div class="col-auto"> 
-        <p>Some text..</p>
-        <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
-      </div>
-      <div class="col-auto"> 
-        <p>Some text..</p>
-        <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
-      </div>
-      <div class="col-auto">
-        <p>Some text..</p>
-        <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
-      </div>
+  
     </div>
-  </div><br>
+    <div class="col-sm-3">
+  
+      <div class="d-grid gap-2 mx-auto">
+        <button class="btn btn-light" type="button" onclick="showForm('add-food')">Add Food/Drink</button>
+        <button class="btn btn-outline-light" type="button" onclick="showForm('edit-food')">Edit Food/Drink</button>
+        <button class="btn btn-info" type="button" onclick="showForm('add-menu')">Add menu</button>
+        <button class="btn btn-outline-info" type="button" onclick="showForm('edit-menu')">Edit menu</button>
+      </div>
+      
+    </div>
+  </div>
+  
+  {% endif %}
+  
+  <div class="bg-3 text-center bg-body-tertiary mt-5 p-3 font-monospace bg-opacity-75 ">    
+      <h2>Menu</h2><br>
+      <br>
+      {% if menu %}
+      <h3>Dishes</h3>
+      <div class="row">
+          {% for item in menu if item["type"] == "food"%}
+      
+          <div class="col-auto">
+            <p>{{ item["name"] }}</p>
+            <img src="{{item['image_url']}}" class="img-responsive rounded" style="width: 200px; height: 200px;" alt="Image">
+          </div>
+      
+          {% endfor %}
+        
+      </div>
+  
+      <h3>Drinks</h3>
+  
+      <div class="row">
+          {% for item in menu if item["type"] == "drink"%}
+      
+          <div class="col-auto">
+            <p>{{ item["name"] }}</p>
+            <img src="{{item['image_url']}}" class="img-responsive" style="width: 200px; height: 200px;" alt="Image">
+          </div>
+      
+          {% endfor %}
+        
+      </div>
+      {% endif %}
+    </div><br>
+</div>
+
+
 
 {% endblock %}
