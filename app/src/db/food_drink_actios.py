@@ -12,9 +12,9 @@ def create_food(db: Session, food: FoodBase) -> Food | str:
     try:
         new_food = Food()
         new_food.image_url = food.image_url
-        new_food.name = food.name
-        new_food.ingredients = food.ingredients
-        new_food.origin = food.origin
+        new_food.name = food.name.lower()
+        new_food.ingredients = food.ingredients.lower()
+        new_food.origin = food.origin.lower()
         new_food.meal_id = food.meal_id
         new_food.price = food.price
         new_food.type_id = food.type_id
@@ -44,9 +44,9 @@ def update_food(db: Session, food_id: int, food: FoodBase) -> Food | bool:
         return False
     try:
         _food.image_url = food.image_url
-        _food.name = food.name
-        _food.ingredients = food.ingredients
-        _food.origin = food.origin
+        _food.name = food.name.lower()
+        _food.ingredients = food.ingredients.lower()
+        _food.origin = food.origin.lower()
         _food.meal_id = food.meal_id
         _food.price = food.price
         _food.type_id = food.type_id

@@ -41,23 +41,40 @@ async def create_food(request: Request,db: Session = Depends(get_db)):
 
 
 
-@router.delete('/delete_food/{food_id}')
-def delete_food(food_id:int,db: Session = Depends(get_db)):
-    return food_drink_actios.delete_food(db=db, food_id=food_id)
+@router.get('/delete_food/{food_id}')
+def delete_food(request: Request,food_id:int,db: Session = Depends(get_db)):
+    print("Deleting food")
+    user, body = get_current_user(request=request, db=db)
+    if user is None:
+        return RedirectResponse(url="/home",status_code=status.HTTP_307_TEMPORARY_REDIRECT)
+    deleted_food = food_drink_actios.delete_food(db=db, food_id=food_id)
+    return RedirectResponse(url='/menu',status_code=status.HTTP_302_FOUND)
 
 
 
-@router.patch('/update_food/{food_id}')
-def update_food(food_id: int, food:FoodBase, db : Session = Depends(get_db)):
-    return food_drink_actios.update_food(db=db, food_id=food_id, food=food)
+@router.post('/update_food/{food_id}')
+async def update_food(food_id: int, request: Request, db : Session = Depends(get_db)):
+    user, body = get_current_user(request=request, db=db)
+    if user is None:
+            return RedirectResponse(url="/home",status_code=status.HTTP_307_TEMPORARY_REDIRECT)
+    formdata = await request.form()
+    food = FoodBase(
+         name=formdata['name'],
+         origin=formdata['origin'],
+         type_id=formdata['type'],
+         meal_id=formdata['meal'],
+         ingredients=formdata['ingredients'],
+         price=formdata['price'],
+         image_url=formdata['image_url']
+    )
+    edited = food_drink_actios.update_food(db=db, food_id=food_id, food=food)
+    return RedirectResponse(url='/menu',status_code=status.HTTP_302_FOUND)
 
 
 
 @router.get('/get_food')
 def get_food(db : Session = Depends(get_db)):
     return food_drink_actios.get_food(db=db)
-
-
 
 @router.get('/get_one_food/{name}')
 def get_one_food(name:str,db : Session = Depends(get_db)):

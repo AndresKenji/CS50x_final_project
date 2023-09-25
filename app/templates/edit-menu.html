@@ -1,0 +1,20 @@
+<div id="edit-menu" style="display: none;">
+    <table class="table table-dark table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in menu  %}
+        <tr>
+          <td>{{item.name | title}}</td>
+          <td>{{item.amount | title}}</td>
+          <td><a href="/food/delete_food/{{item.id}}" class="btn btn-danger"><i class="bi bi-trash"></i></a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>

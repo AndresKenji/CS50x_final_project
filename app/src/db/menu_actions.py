@@ -12,6 +12,7 @@ def add_menu(db: Session, menu: MenuBase) -> Menu | str:
             new_menu = Menu()
             new_menu.food_id = menu.food_id
             new_menu.food_quantity = menu.food_quantity
+            new_menu.type_id = menu.type_id
             db.add(new_menu)
             db.commit()
             db.refresh(new_menu)
@@ -40,6 +41,7 @@ def update_menu(db: Session, menu_id: int, menu: MenuBase) -> Menu | None | str:
         if menu.food_id:
             _menu.food_id = menu.food_id
             _menu.food_quantity = menu.food_quantity
+            _menu.type_id = menu.type_id
             db.add(_menu)
             db.commit()
             db.refresh(_menu)
@@ -63,6 +65,7 @@ def get_menu_details(db : Session):
     for menu in _menus:
         detail = {}
         detail["id"] = menu.id
+        detail["amount"] = menu.food_quantity
         detail["type"] = next((tp.name for tp in _types if tp.id == menu.type_id), "Not found")
         detail["name"] = next((food.name for food in _food if food.id == menu.food_id), "Not found")
         detail["ingredients"] = next((food.ingredients for food in _food if food.id == menu.food_id),"Not found")
@@ -70,4 +73,4 @@ def get_menu_details(db : Session):
         detail["image_url"] = next((food.image_url for food in _food if food.id == menu.food_id),  "Not found")
         details.append(detail)
     
-    return details, _types
+    return details, _types, _food

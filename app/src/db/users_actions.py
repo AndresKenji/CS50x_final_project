@@ -32,9 +32,9 @@ def create_user(db: Session, user: UsersBase) -> Users | str:
     else:
         try:
             new_user = Users()
-            new_user.name = user.name
-            new_user.last_name = user.last_name
-            new_user.email = user.email
+            new_user.name = user.name.lower()
+            new_user.last_name = user.last_name.lower()
+            new_user.email = user.email.lower()
             new_user.password = Hash.bcrypt(user.password)
             new_user.rol_id = user.rol_id if user.rol_id is not None else 4
 

@@ -1,0 +1,31 @@
+<div id="add-menu" style="display: none;">
+    <table class="table  table-dark table-hover "> 
+      <thead>
+        <tr>
+          <th>Food name</th>
+          <th>Amount</th>
+          <th>Add</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <form action="/menu" method="post">
+          <td >
+              <select name="food_id" id="food_id" class="form-select" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                {% for f in food %}
+                <option value="{{f.id}}" > {{f.name}}</option>
+                {% endfor %}
+              </select>
+            </td>
+            <td>
+              <input type="number" class="form-control" id="food_quantity" name="food_quantity">
+            </td>
+            <td>
+              <button type="submit" class="btn btn-success"><i class="bi bi-file-plus"></i></button>
+            </td>
+          </form>
+        </tr>
+      </tbody>
+    </table>
+  </div>

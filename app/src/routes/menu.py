@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from .. db import menu_actions
 from .. db.database import get_db
 from .. db.models import MenuBase
-from .. db.db_models import Menu, Meal
+from .. db.db_models import Menu, Meal, Food
 from . helpers import get_current_user
 
 templates = Jinja2Templates(directory="templates")
@@ -22,11 +22,12 @@ def get_menu(request: Request,db: Session = Depends(get_db)):
     user, body = get_current_user(request=request, db=db)
     if user is None:
             return RedirectResponse(url="/home",status_code=status.HTTP_307_TEMPORARY_REDIRECT)
-    menu, types = menu_actions.get_menu_details(db=db)
+    menu, types, food= menu_actions.get_menu_details(db=db)
     meals = db.query(Meal).all()
     body["menu"] = menu
     body["types"] = types
     body["meals"] = meals
+    body['food'] = food
     
     return templates.TemplateResponse("menu.html", body)
 
@@ -40,7 +41,8 @@ async def add_menu(request: Request,db: Session = Depends(get_db)):
         formdata = await request.form()
         menu = MenuBase(
             food_id = formdata["food_id"] ,
-            food_quantity = formdata["food_quantity"]
+            food_quantity = formdata["food_quantity"],
+            type_id = (db.query(Food.type_id).filter(Food.id == formdata["food_id"]).first()).type_id
         )
         new_menu = menu_actions.add_menu(db=db, menu=menu)
         if isinstance(new_menu,Menu):
@@ -65,7 +67,6 @@ async def update_menu(request: Request, menu_id: int, db: Session = Depends(get_
             food_id = None if formdata["food_id"] == None or formdata["food_id"] =="" else formdata["food_id"],
             drink_id = None if formdata["drink_id"] == None or formdata["drink_id"] =="" else formdata["drink_id"],
             food_quantity = None if formdata["food_quantity"] == None or formdata["food_quantity"] =="" else formdata["food_quantity"],
-            drink_quantity = None if formdata["drink_quantity="] == None or formdata["drink_quantity="] =="" else formdata["drink_quantity="]
         )
 
         updated_menu = menu_actions.update_menu(db = db, menu_id = menu_id, menu = menu)

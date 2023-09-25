@@ -71,9 +71,9 @@ async def update_user(request: Request, response:Response, id:int, db: Session =
         return templates.TemplateResponse("home.html", body)
     edit_user = db.query(Users).filter(Users.id == id).first()
     formdata = await request.form()
-    edit_user.name = formdata['name']
-    edit_user.last_name = formdata['last_name']
-    edit_user.email = formdata['email']
+    edit_user.name = formdata['name'].lower()
+    edit_user.last_name = formdata['last_name'].lower()
+    edit_user.email = formdata['email'].lower()
     edit_user.password = edit_user.password if formdata['password'] =="" or formdata['password'] is None else  users_actions.Hash.bcrypt(formdata['password'])
     edit_user.rol_id = formdata['rol']
     updated_user = users_actions.update_user(db=db, user=user)
