@@ -69,6 +69,7 @@ def get_menu_details(db : Session):
         detail["type"] = next((tp.name for tp in _types if tp.id == menu.type_id), "Not found")
         detail["name"] = next((food.name for food in _food if food.id == menu.food_id), "Not found")
         detail["ingredients"] = next((food.ingredients for food in _food if food.id == menu.food_id),"Not found")
+        detail["origin"] = next((food.origin for food in _food if food.id == menu.food_id),"Not found")
         detail["price"] = next((food.price for food in _food if food.id == menu.food_id),  "Not found")
         detail["image_url"] = next((food.image_url for food in _food if food.id == menu.food_id),  "Not found")
         details.append(detail)

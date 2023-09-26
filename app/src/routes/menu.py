@@ -23,10 +23,9 @@ def get_menu(request: Request,db: Session = Depends(get_db)):
     if user is None:
             return RedirectResponse(url="/home",status_code=status.HTTP_307_TEMPORARY_REDIRECT)
     menu, types, food= menu_actions.get_menu_details(db=db)
-    meals = db.query(Meal).all()
     body["menu"] = menu
     body["types"] = types
-    body["meals"] = meals
+    body["meals"] = db.query(Meal).all()
     body['food'] = food
     
     return templates.TemplateResponse("menu.html", body)

@@ -1,15 +1,8 @@
  body {
   /* background-image: url("/static/wall.jpg"); */
   background-image: url("/static/food.png");
-  min-height: 100vh; /* 100% de la altura de la ventana */
-  display: flex;
-  flex-direction: column;
  }
  
-
-.container-fluid {
-  flex-grow: 1;
-}
    
   /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
   .row.content {
@@ -40,6 +33,15 @@
     }
     .row.content {height:auto;} 
   }
+
+
+  .menu-container {
+    background: rgba(0,0,0,.9);
+    color: azure;
+    border-radius: 20px;
+  }
+
+
 
 /* Login styles */
 

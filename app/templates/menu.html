@@ -7,7 +7,7 @@
 {% block content %}
 
 
-<div class="container bg-dark mt-2 p-2 bg-opacity-75">
+<div class="container menu-container mt-3 p-3">
   {% if rol in [1,2] %}
   
   <div class="row">
@@ -36,31 +36,31 @@
   {% endif %}
 </div>
 
-<div class="container text-center mt-5 p-3 justify-content-center">    
-    <h2>Menu</h2><br>
-    <br>
-    {% if menu %}
-    <h3>Dishes</h3>
+<div class="container text-center mt-3 p-3 justify-content-center menu-container" >    
+  {% if menu %}
+    <h1>Daily Menu</h1><br>
+    
+    <h3 class="mb-2">Dishes</h3>
     <div class="row justify-content-center">
         {% for item in menu if item["type"] == "food"%}
     
         <div class="col-3">
-          <p>{{ item["name"] }}</p>
-          <img src="{{item['image_url']}}" class="img-responsive rounded" style="width: 200px; height: 200px;" alt="Image">
+          <p>{{ item["name"] | title}}</p>
+          <img src="{{item['image_url']}}" class="img-thumbnail" style="width: 200px; height: 200px;" alt='{{item["name"]}}'>
         </div>
     
         {% endfor %}
       
     </div>
 
-    <h3>Drinks</h3>
+    <h3 class="mb-2">Drinks</h3>
 
     <div class="row justify-content-center">
         {% for item in menu if item["type"] == "drink"%}
     
         <div class="col-3">
-          <p>{{ item["name"] }}</p>
-          <img src="{{item['image_url']}}" class="img-responsive rounded" style="width: 200px; height: 200px;" alt="Image">
+          <p>{{ item["name"] | title}}</p>
+          <img src="{{item['image_url']}}" class="img-thumbnail" style="width: 200px; height: 200px;" alt='{{item["name"]}}'>
         </div>
     
         {% endfor %}

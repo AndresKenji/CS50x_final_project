@@ -5,17 +5,6 @@ from functools import wraps
 from .. db.db_models import Users, Roles
 
 
-def login_required(f):
-    """
-    Decorate routes to require login
-    """
-    @wraps(f)
-    def decorated_function(*args, ** kwargs):
-        if get_current_user() is None:
-            response = RedirectResponse(url="/login", status_code=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
-            return response
-        return f(*args, ** kwargs)
-    return decorated_function
 
 def get_current_user(request: Request, db:Session):
     body = {"request":request, 
