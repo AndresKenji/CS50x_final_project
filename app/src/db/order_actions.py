@@ -1,6 +1,6 @@
 from sqlalchemy.orm.session import Session
 from datetime import datetime
-from .db_models import OrderDetail, Orders
+from .db_models import OrderDetail, Orders, Food
 from .models import OrderDetailBase
 from typing import List
 
@@ -81,3 +81,14 @@ def get_orders(db : Session) -> list[OrderDetailBase] | None:
 def get_order(db:Session, order_id:int) -> list[OrderDetailBase] | None:
     return db.query(OrderDetail).filter(OrderDetail.order_id == order_id).all()
 
+
+def get_order_details(db:Session):
+    details = []
+
+    for order in db.query(Orders).all():
+        
+        pass
+
+
+
+    return details

@@ -2,36 +2,36 @@
   /* background-image: url("/static/wall.jpg"); */
   background-image: url("/static/food.png");
  }
- 
-   
+
+
   /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
   .row.content {
     background-color: #f1f1f1ea;
 
   }
 
-  
+
   /* Set gray background color and 100% height */
   .sidenav {
     padding-top: 20px;
     background-color: #f1f1f1ea;
-    
+
   }
-  
+
   /* Set black background color, white text and some padding */
   footer {
     background-color: #000000;
     color: azure;
     padding: 15px;
   }
-  
+
   /* On small screens, set height to 'auto' for sidenav and grid */
   @media screen and (max-width: 767px) {
     .sidenav {
       height: auto;
       padding: 15px;
     }
-    .row.content {height:auto;} 
+    .row.content {height:auto;}
   }
 
 
@@ -49,9 +49,9 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
   width: 400px;
   padding: 40px;
-  transform: translate(-50%, -50%);
   background: rgba(0,0,0,.9);
   box-sizing: border-box;
   box-shadow: 0 15px 25px rgba(0,0,0,.6);
@@ -204,8 +204,8 @@
 }
 
 .center-box {
-  position: absolute; 
-  top: 30%; 
+  position: absolute;
+  top: 30%;
   background: rgba(0,0,0,.9);
   color: azure;
   box-sizing: border-box;
