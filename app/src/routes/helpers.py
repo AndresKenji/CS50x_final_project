@@ -11,7 +11,8 @@ def get_current_user(request: Request, db:Session):
             "session":False, 
             "rol":4, 
             "msg":None,
-            "USERNAME": None }
+            "USERNAME": None,
+            "user_orders": None }
     try:
         user_id = request.cookies.get("user")
         print("Find user cookie = ",user_id)

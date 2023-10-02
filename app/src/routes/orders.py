@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from ..db import order_actions, menu_actions
 from ..db.database import get_db
 from ..db.models import OrderDetailBase
-from .. db.db_models import Menu, Meal, Food, Orders
+from .. db.db_models import Menu, Meal, Food, Orders, Users
 from . helpers import get_current_user
 
 templates = Jinja2Templates(directory="templates")
@@ -22,6 +22,10 @@ def get_orders(request: Request,db: Session = Depends(get_db)):
     user, body = get_current_user(request=request, db=db)
     if user is None:
             return RedirectResponse(url="/home",status_code=status.HTTP_307_TEMPORARY_REDIRECT)
+    menu, types, food= menu_actions.get_menu_details(db=db)
+    customers = db.query(Users).filter(Users.rol_id == 4).all()
+    body["customers"] = customers
+    body["menu"] = menu
     body['orders'] = db.query(Orders).all()
     return templates.TemplateResponse("orders.html", body)
 
@@ -30,8 +34,54 @@ def get_order(order_id : int, db: Session = Depends(get_db)):
     return order_actions.get_order(db = db, order_id = order_id)
 
 @router.post('/add_order')
-def add_order(details: OrderDetailBase,db: Session = Depends(get_db)):
-    return order_actions.add_order(db= db, details= details)
+async def add_order(request: Request,db: Session = Depends(get_db)):
+    print("loading menu page")
+    user, body = get_current_user(request=request, db=db)
+    if user is None:
+            return RedirectResponse(url="/home",status_code=status.HTTP_307_TEMPORARY_REDIRECT)
+    if user.rol_id not in [1,2,3]:
+         body['msg']="Not authorized for this operation"
+         return templates.TemplateResponse("orders.html", body)
+    
+    formdata = await request.form()
+    result_dict = {}
+    details = []
+    current_food_id = None
+    current_quantity = None
+    current_detail = None
+
+    for key, value in formdata.items():
+        if key.startswith('food_id'):
+            current_food_id = value
+        elif key.startswith('food_quantity'):
+            current_quantity = int(value) if value.isdigit() else None
+        elif key.startswith('detail'):
+            current_detail = value if value else None
+
+        if current_food_id and current_quantity is not None:
+            result_dict[current_food_id] = {
+                'quantity': current_quantity,
+                'detail': current_detail
+            }
+    
+    food_ids = result_dict.keys()
+
+    for id in food_ids:
+         detail = OrderDetailBase(
+              food_id= id,
+              food_quantity= result_dict[id]['quantity'],
+              detail=result_dict[id]['detail'],
+              user_id= formdata['customer_id']
+         )
+         details.append(detail)
+
+    action = order_actions.add_order(db= db, details= details)
+
+    if action:
+        return RedirectResponse('/orders', status_code=status.HTTP_302_FOUND)
+    else:
+        body["msg"] = "There was an error"
+        return templates.TemplateResponse("orders.html", body)
 
 @router.patch('/update_order/{order_id}')
 def update_order( order_id: int,detail: OrderDetailBase, detail_id: int, db: Session = Depends(get_db)):

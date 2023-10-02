@@ -7,12 +7,52 @@
 
 {% block content %}
 
-<div class="container menu-container mt-3 p-3">
-    <form action="/orders/add_order">
-        
+<div class="container menu-container mt-3 p-3 ">
+    <form action="/orders/add_order"  method="post">
+        <table class="table table-dark table-hover p-1">
+            <thead>
+                <tr>
+                    <th>Check</th>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in menu %}
+                <tr>
+                    <td>
+                        <input class="form-check-input" type="checkbox" value="{{item.food_id}}" id="food_id" name="food_id_{{item.food_id}}">
+                    </td>
+                    <td>
+                        <label class="form-check-label" for="{{item.id}}"> {{item.name}} </label>
+                    </td>
+                    <td >
+                        <input class="form-control" type="number" min="0" id="food_quantity" name="food_quantity_{{item.food_id}}" style="width: 80px;">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="detail" name="detail_{{item.food_id}}" >
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="row">
+            <select class="form-select m-2" aria-label="select customer" style="max-width: 180px;" name="customer_id">
+                <option selected>Select Customer</option>
+                {% for customer in customers %}
+                <option value="{{customer.id}}">{{customer.name}} {{customer.last_name}}</option>
+                {% endfor %}
+              </select>
 
-        <button type="submit" class="btn">Create order</button>
+            <button type="submit" class="btn btn-light col-1 m-2">Create</button>
+        </div>
+        
     </form>
+
+    <div class="row">
+        
+    </div>
     
 </div>
 

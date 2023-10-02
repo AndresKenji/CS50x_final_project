@@ -1,37 +1,38 @@
 from sqlalchemy.orm.session import Session
 from datetime import datetime
-from .db_models import OrderDetail, Orders, Food
+from .db_models import OrderDetail, Orders, Food, Users
 from .models import OrderDetailBase
 from typing import List
 
 
-def add_order(db: Session, details: List[OrderDetailBase]) -> Orders | str:
+def add_order(db: Session, details: List[OrderDetailBase]) -> bool:
     # Create new order
-    _new_order = Orders()
-    _new_order.date = datetime.now()
-    _new_order.state_id = 1
-    db.add(_new_order)
-    db.commit()
-    db.refresh(_new_order)
+    try:
+        _new_order = Orders()
+        _new_order.date = datetime.now()
+        _new_order.state_id = 1
+        db.add(_new_order)
+        db.commit()
+        db.refresh(_new_order)
 
-    # add details
-    order_details = []
-    for detail in details:
-        order_detail = OrderDetail()
-        order_detail.order_id = _new_order.id
-        order_detail.food_id = detail.food_id
-        order_detail.drink_id = detail.drink_id
-        order_detail.user_id = detail.user_id
-        order_detail.food_quantity = detail.food_quantity if detail.food_quantity else None
-        order_detail.drink_quantity = detail.drink_quantity if detail.drink_quantity else None
-        order_detail.detail = detail.detail if detail.detail else None
+        # add details
+        order_details = []
+        for detail in details:
+            order_detail = OrderDetail()
+            order_detail.order_id = _new_order.id
+            order_detail.food_id = detail.food_id
+            order_detail.user_id = detail.user_id
+            order_detail.food_quantity = detail.food_quantity if detail.food_quantity else None
+            order_detail.detail = detail.detail if detail.detail else None
+            
+            order_details.append(order_detail)
         
-        order_details.append(order_detail)
-    
-    db.add_all(order_details)
-    db.commit()
-    db.close()
-    return order_details
+        db.add_all(order_details)
+        db.commit()
+        db.close()
+    except:
+        return False
+    return True
 
 
 
@@ -60,9 +61,7 @@ def update_order(db: Session, order_id: int, detail: OrderDetailBase, detail_id:
     else:
         _detail.order_id = _order.id
         _detail.food_id = detail.food_id
-        _detail.drink_id = detail.drink_id
         _detail.food_quantity = detail.food_quantity if detail.food_quantity else None
-        _detail.drink_quantity = detail.drink_quantity if detail.drink_quantity else None
         _detail.detail = detail.detail if detail.detail else None
 
         try:
@@ -83,9 +82,19 @@ def get_order(db:Session, order_id:int) -> list[OrderDetailBase] | None:
 
 
 def get_order_details(db:Session):
+    _orders = db.query(Orders).all()
+    _details = db.query(OrderDetail).all()
+    _food = db.query(Food).all()
+    _users = db.query(Users).all()
     details = []
 
-    for order in db.query(Orders).all():
+    for order in _orders:
+        detail = {}
+        detail['id'] = order.id
+        detail['user'] = next((user.name for user in _users if user.id == order.user_id), 'Not found')
+        detail['details'] = next(())
+        
+        
         
         pass
 

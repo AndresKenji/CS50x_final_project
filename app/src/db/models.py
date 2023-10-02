@@ -39,7 +39,6 @@ class OrdersBase(BaseModel):
     date: str
 
 class OrderDetailBase(BaseModel):
-    order_id: int
     food_id: Optional[int] = None
     user_id: int
     detail: Optional[str] = None

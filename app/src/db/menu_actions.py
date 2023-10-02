@@ -65,6 +65,7 @@ def get_menu_details(db : Session):
     for menu in _menus:
         detail = {}
         detail["id"] = menu.id
+        detail["food_id"] = menu.food_id
         detail["amount"] = menu.food_quantity
         detail["type"] = next((tp.name for tp in _types if tp.id == menu.type_id), "Not found")
         detail["name"] = next((food.name for food in _food if food.id == menu.food_id), "Not found")

@@ -10,7 +10,9 @@
     <div class="col-sm-2 sidenav">
       <div class="list-group">
         <a class="list-group-item" href="/contact">Contact us</a>
+        {% if session == None %}
         <a class="list-group-item" href="/login">Login</a>
+        {% endif %}
         <a class="list-group-item" href="/about">About</a>
       </div>
 
