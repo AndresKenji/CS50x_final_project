@@ -18,7 +18,7 @@ router = APIRouter(
 
 @router.get('/')
 def get_orders(request: Request,db: Session = Depends(get_db)):
-    print("loading menu page")
+    print("loading orders page")
     user, body = get_current_user(request=request, db=db)
     if user is None:
             return RedirectResponse(url="/home",status_code=status.HTTP_307_TEMPORARY_REDIRECT)
@@ -26,7 +26,7 @@ def get_orders(request: Request,db: Session = Depends(get_db)):
     customers = db.query(Users).filter(Users.rol_id == 4).all()
     body["customers"] = customers
     body["menu"] = menu
-    body['orders'] = db.query(Orders).all()
+    body['orders'] = order_actions.get_order_details(db)
     return templates.TemplateResponse("orders.html", body)
 
 @router.get('/get_order/{order_id}')
@@ -35,7 +35,7 @@ def get_order(order_id : int, db: Session = Depends(get_db)):
 
 @router.post('/add_order')
 async def add_order(request: Request,db: Session = Depends(get_db)):
-    print("loading menu page")
+    print("adding order")
     user, body = get_current_user(request=request, db=db)
     if user is None:
             return RedirectResponse(url="/home",status_code=status.HTTP_307_TEMPORARY_REDIRECT)
@@ -80,13 +80,31 @@ async def add_order(request: Request,db: Session = Depends(get_db)):
     if action:
         return RedirectResponse('/orders', status_code=status.HTTP_302_FOUND)
     else:
-        body["msg"] = "There was an error"
+        body["msg"] = "There was an error, please verify the order"
         return templates.TemplateResponse("orders.html", body)
 
-@router.patch('/update_order/{order_id}')
-def update_order( order_id: int,detail: OrderDetailBase, detail_id: int, db: Session = Depends(get_db)):
-    return order_actions.update_order(db=db, order_id=order_id, detail=detail, detail_id=detail_id)
+@router.post('/update_order/{order_id}')
+async def update_order(request: Request,order_id: int, db: Session = Depends(get_db)):
+    print(f"Updatting order {order_id}")
+    user, body = get_current_user(request=request, db=db)
+    if user is None:
+            return RedirectResponse(url="/home",status_code=status.HTTP_307_TEMPORARY_REDIRECT)
+    formdata = await request.form()
+    state_id = formdata['state_id']
+    action = order_actions.update_order_state(order_id, state_id, db)
+    if action:
+         return RedirectResponse('/orders', status_code=status.HTTP_302_FOUND)
+    body['msg'] = f'There was an error updating the order {order_id}'
+    return templates.TemplateResponse("orders.html", body)
 
-@router.delete('/delete_order/{order_id}')
-def delete_order(order_id: int,db: Session = Depends(get_db)):
-    return order_actions.delete_order(db=db,order_id=order_id)
+@router.get('/delete_order/{order_id}')
+def delete_order(request: Request,order_id: int,db: Session = Depends(get_db)):
+    print(f"Updatting order {order_id}")
+    user, body = get_current_user(request=request, db=db)
+    if user is None:
+            return RedirectResponse(url="/home",status_code=status.HTTP_307_TEMPORARY_REDIRECT)
+    action = order_actions.delete_order(db=db,order_id=order_id)
+    if action:
+         return RedirectResponse('/orders', status_code=status.HTTP_302_FOUND)
+    body['msg'] = f'There was an error updating the order {order_id}'
+    return templates.TemplateResponse("orders.html", body)

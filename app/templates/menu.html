@@ -46,10 +46,13 @@
     
         <div class="col-3">
           <p>{{ item["name"] | title}}</p>
-          <img src="{{item['image_url']}}" class="img-thumbnail" style="width: 200px; height: 200px;" alt='{{item["name"]}}'>
+          <img src="{{  item['image_url']  if item['amount'] > 0 else 'https://media.istockphoto.com/id/1305876461/vector/sorry-temporarily-out-of-stock-sign.jpg?s=612x612&w=0&k=20&c=gXtMjuh6kHPRQaOnPTroS6M7oCpC35VAfYVFQMMQmds=' }}" 
+          class="img-thumbnail" 
+          style="width: 200px; height: 200px;" 
+          alt='{{item["name"]}}'>
         </div>
     
-        {% endfor %}
+  {% endfor %}
       
     </div>
 
@@ -60,7 +63,10 @@
     
         <div class="col-3">
           <p>{{ item["name"] | title}}</p>
-          <img src="{{item['image_url']}}" class="img-thumbnail" style="width: 200px; height: 200px;" alt='{{item["name"]}}'>
+          <img src="{{  item['image_url']  if item['amount'] > 0 else 'https://media.istockphoto.com/id/1305876461/vector/sorry-temporarily-out-of-stock-sign.jpg?s=612x612&w=0&k=20&c=gXtMjuh6kHPRQaOnPTroS6M7oCpC35VAfYVFQMMQmds=' }}" 
+          class="img-thumbnail" 
+          style="width: 200px; height: 200px;" 
+          alt='{{item["name"]}}'>
         </div>
     
         {% endfor %}

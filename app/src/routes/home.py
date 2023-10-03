@@ -81,3 +81,8 @@ def logout(request: Request):
     USERNAME = None
     
     return response
+
+
+@router.get('/register', response_class=HTMLResponse)
+def register_page(request: Request):
+    return templates.TemplateResponse('register.html', {"request": request,"session":False, "rol":4})

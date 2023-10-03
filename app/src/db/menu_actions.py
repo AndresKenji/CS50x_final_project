@@ -76,3 +76,4 @@ def get_menu_details(db : Session):
         details.append(detail)
     
     return details, _types, _food
+
