@@ -28,9 +28,6 @@ All users are initially registered as customers. An administrator must change th
 
 The next diagrams shows the relation beteewn tables and views
 
-<img src="./readme_img/relational_diagram.png" style="height: 800px;" >
-
-
 ![relational_diagram](/readme_img/relational_diagram.png)
 ![web_acces_diagram](/readme_img/web_access_diagram.png)
 
@@ -54,6 +51,6 @@ Finally, customers are limited to viewing the menu and accessing information abo
 - [Jinja2](https://jinja.palletsprojects.com/en/3.1.x/)
 - [Uvicorn](https://www.uvicorn.org)
 
-#### Description:
+
 
 
