@@ -46,6 +46,7 @@ async def create_user(request: Request,response:Response,db: Session = Depends(g
         body["msg"] = str(e)
         return templates.TemplateResponse("users.html", body)
 
+
 @router.get('/update_user/{id}')
 def update_user_page(request: Request, response:Response, id:int, db: Session = Depends(get_db)):
     print("Loading edit user page")

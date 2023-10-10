@@ -67,6 +67,7 @@
             </thead>
             <tbody>
                 {% for order in orders %}
+                {% if order.state != 'finished' %}
                 <tr>
                     <td> {{order.id}} </td>
                     <td> {{order.state}} </td>
@@ -81,6 +82,7 @@
                         <a class="btn btn-success" href="/invoice/create_invoice/{{order.id}}"><i class="bi bi-cash-stack"></i> Pay</a>
                     </td>
                 </tr>
+                {% endif %}
                 {% endfor %}
             </tbody>
         </table>

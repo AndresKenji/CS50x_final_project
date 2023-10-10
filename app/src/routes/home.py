@@ -6,6 +6,8 @@ from sqlalchemy.orm import Session
 from typing import Optional
 # Local imports
 from .. db import users_actions
+from .. db.db_models import Users
+from .. db.models import UsersBase
 from .. db.database import get_db
 from . helpers import get_current_user
 
@@ -86,3 +88,24 @@ def logout(request: Request):
 @router.get('/register', response_class=HTMLResponse)
 def register_page(request: Request):
     return templates.TemplateResponse('register.html', {"request": request,"session":False, "rol":4})
+
+@router.post('/register', response_class=HTMLResponse)
+async def register(request: Request, db:Session = Depends(get_db)):
+    print("Trying user creation")
+    user, body = get_current_user(request=request, db=db)
+    formdata = await request.form()
+    user = UsersBase(
+        name=formdata['name'],
+        last_name= formdata['last_name'],
+        email=formdata['email'],
+        rol_id=4,
+        password=formdata['password']
+    )
+    userdb = users_actions.create_user(db=db,user=user)
+    if isinstance(userdb, Users):
+        return RedirectResponse(url="/login",status_code=status.HTTP_302_FOUND)
+    if isinstance(userdb, str):
+        body["msg"] = userdb
+        return templates.TemplateResponse("register.html", body)
+
+    return

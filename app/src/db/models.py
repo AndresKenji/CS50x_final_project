@@ -49,4 +49,3 @@ class InvoiceBase(BaseModel):
     elementes: str
     total: int
     user_id: int
-    date: Optional[str]

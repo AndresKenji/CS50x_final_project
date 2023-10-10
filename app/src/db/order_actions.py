@@ -130,5 +130,33 @@ def get_order_details(db:Session):
 
     return details
 
+def get_order_detail(db:Session, order_id:int):
+    _order = db.query(Orders).filter(Orders.id == order_id).first()
+    _details = db.query(OrderDetail).filter(OrderDetail.order_id == order_id).all()
+    _food = db.query(Food).all()
+    _users = db.query(Users).all()
+    _states = db.query(States).all()
+    
+    detail = {}
+    detail['id'] = _order.id
+    detail['state_id'] = _order.state_id
+    detail['state'] = next((s.name for s in _states if s.id == _order.state_id  ), 'None')
+    detail['user_id'] = next((order_detail.user_id for order_detail in _details if order_detail.order_id == _order.id), 'Not found')
+    detail['user_name'] = next((user.name for user in _users if user.id == detail['user_id']), 'Not found')
+    detail['details'] = {}
+    detail['total'] = 0
+    detail['order_details'] = [d for d in _details if d.order_id == _order.id]
+    for order_detail in detail['order_details']:
+        detail['details'][order_detail.id] = {
+        "food_id":order_detail.food_id,
+        "food_name": next((f.name for f in _food if f.id == order_detail.food_id), "Not found"),
+        "food_quantity":order_detail.food_quantity,
+        "detail": order_detail.detail,
+        "price": float(next((f.price for f in _food if f.id == order_detail.food_id), 0)) * int(order_detail.food_quantity)
+        }
+        detail['total'] += detail['details'][order_detail.id]['price']
+    
+    return detail
+    
 
 

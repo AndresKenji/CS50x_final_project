@@ -13,10 +13,11 @@
           <li class="nav-item">
             <a class="nav-link" href="/menu"> <i class="bi-file-text-fill"></i>Menu</a>
           </li>
-
+          {% if rol != 4%}
           <li class="nav-item">
             <a class="nav-link" href="/orders"> <i class="bi-list-check"></i>Orders</a>
           </li>
+          {% endif %}
         {% endif %}
         {% if rol == 1%}
           <li class="nav-item">
