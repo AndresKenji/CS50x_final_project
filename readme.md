@@ -26,6 +26,14 @@ To begin, you need to log in as an administrator to add new roles or make change
 
 All users are initially registered as customers. An administrator must change their roles, and your assigned role determines what actions you can perform.
 
+The next diagrams shows the relation beteewn tables and views
+
+<img src="./readme_img/relational_diagram.png" style="height: 800px;" >
+
+
+![relational_diagram](/readme_img/relational_diagram.png)
+![web_acces_diagram](/readme_img/web_access_diagram.png)
+
 ### Administrator
 An administrator can perform all tasks, including creating or deleting users, and can also act as a customer or any other role.
 
@@ -47,4 +55,5 @@ Finally, customers are limited to viewing the menu and accessing information abo
 - [Uvicorn](https://www.uvicorn.org)
 
 #### Description:
-TODO
+
+
