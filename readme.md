@@ -44,7 +44,7 @@ Waiters can view the menu, create orders, and generate invoices.
 ### Customers
 Finally, customers are limited to viewing the menu and accessing information about the ingredients used in each recipe.
 
-#### Video Demo:  <URL HERE>
+#### Video Demo:  <URL https://www.youtube.com/watch?v=dMzZstF4tUc>
 ## Documentation
 - [Fastapi](https://fastapi.tiangolo.com/)
 - [SQLAlchemy](https://docs.sqlalchemy.org/en/20/)

@@ -7,9 +7,9 @@
 
 {% block content %}
 
-<div class="container center-box p-3">
-    <h3 class="text-center">Register</h3>
-    <form action="/register" method="post">
+<div class="container p-3" >
+    <form action="/register" method="post" class="form-control " style="color: aliceblue; background-color: rgba(0, 0, 0, 0.9);">
+        <h3 class="text-center">Register</h3>
         <div class="row align-items-center">
             <div class="col-md-6 ">
                 <label for="name">Name</label>
@@ -33,7 +33,9 @@
             <div class="col-auto pt-4">
             </div>
         </div>
-        <button type="submit" class="btn btn-success mt-1">Add</button>
+        <div class="row justify-content-center">
+            <button type="submit" class="btn btn-info mt-1 col-3">Add</button>
+        </div>
     </form>
 
 </div>
