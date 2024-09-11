@@ -28,8 +28,8 @@ To begin, you need to log in as an administrator to add new roles or make change
 All users are initially registered as customers. An administrator must change their roles, and your assigned role determines what actions you can perform.
 The next diagrams shows the relation beteewn tables and views
 
-![relational_diagram](/readme_img/relational_diagram.png)
-![web_acces_diagram](/readme_img/web_access_diagram.png)
+![relational_diagram](./readme_img/relational_diagram.png)
+![web_acces_diagram](./readme_img/web_access_diagram.png)
 
 
 On the **db folder** you will find all the files that interact or describe database functionalities.
